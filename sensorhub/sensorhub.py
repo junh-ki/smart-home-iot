@@ -1,3 +1,10 @@
+"""
+Prior to using this script, smbus Python library should be installed first:
+
+    $ pip3 install smbus
+
+"""
+
 import smbus
 
 DEVICE_BUS = 1
