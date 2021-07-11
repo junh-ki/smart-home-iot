@@ -1,0 +1,35 @@
+$ sudo apt update
+$ sudo apt upgrade
+$ curl -sSL https://get.docker.com | sh
+$ sudo usermod -aG docker pi
+$ sudo reboot
+$ groups # confirm if `docker` is listed
+
+$ docker pull postgres:alpine
+$ docker run --name postgres-0 -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:13.3-alpine
+
+# If your docker container stops after 10 seconds or so,
+# There's a high probability that your Raspberry Pi's `libseccomp` is outdated.
+# You need to upgrade this library manually as follows:
+$ wget http://ftp.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb
+$ sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb
+
+$ docker exec -it postgres-0 bash
+$ psql -U postgres
+$ \du
+$ create database test;
+$ \l
+$ \c
+$ \d
+$ drop database test;
+
+<pgAdmin>
+$ docker pull smarthomeiot/pgadmin4 # supports raspberry pi 3 and 4
+$ docker run -p 5050:5050 -e PGADMIN_DEFAULT_EMAIL=smart.home.iot.dev@gmail.com -e PGADMIN_DEFAULT_PASSWORD=password -d smarthomeiot/pgadmin4
+
+<tagging and pushing>
+$ docker tag 9f0 smarthomeiot/pgadmin4
+$ docker push smarthomeiot/pgadmin4
+
+# WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm/v7) and no specific platform was requested
+# docker: no matching manifest for linux/arm/v7 in the manifest list entries.
