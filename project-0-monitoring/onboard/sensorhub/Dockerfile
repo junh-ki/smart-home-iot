@@ -24,5 +24,7 @@ CMD ["sensorhub-daq.py"]
 ENTRYPOINT ["python3"]
 
 # docker build -t smart-home-iot/sensorhub-daq .
-# docker run --privileged -it smart-home-iot/sensorhub-daq
-# docker run --device /dev/i2c-1 smart-home-iot/sensorhub-daq
+# docker tag smart-home-iot/sensorhub-daq smarthomeiot/sensorhub-daq
+# docker push smarthomeiot/sensorhub-daq
+# docker run --privileged -it smarthomeiot/sensorhub-daq
+# docker run --device /dev/i2c-1 smarthomeiot/sensorhub-daq
