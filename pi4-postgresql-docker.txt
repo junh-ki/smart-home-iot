@@ -5,8 +5,7 @@ $ sudo usermod -aG docker pi
 $ sudo reboot
 $ groups # confirm if `docker` is listed
 
-$ docker pull postgres:alpine
-$ docker run --name postgres-0 -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:13.3-alpine
+$ docker run --name postgres-0 -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:11.12-alpine
 
 # If your docker container stops after 10 seconds or so,
 # There's a high probability that your Raspberry Pi's `libseccomp` is outdated.
@@ -14,14 +13,35 @@ $ docker run --name postgres-0 -e POSTGRES_PASSWORD=password -d -p 5432:5432 pos
 $ wget http://ftp.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb
 $ sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb
 
-$ docker exec -it postgres-0 bash
-$ psql -U postgres
-$ \du
-$ create database test;
-$ \l
-$ \c
-$ \d
-$ drop database test;
+$ docker exec -it postgres-0 /bin/bash
+# psql -U postgres
+# \du
+# create database sensors;
+# \l
+# \c sensors
+# \d
+## drop database sensors;
+
+#
+create table singleton(
+    id integer not null primary key default 42,
+    timestamp timestamp,
+    off_temperature integer,
+    on_temperature integer,
+    humidity integer,
+    barometric_pressure integer,
+    is_motion_detected boolean,
+    constraint only_one_row check (id = 42)
+);
+
+# \dt
+# select * from singleton;
+# \d
+
+$ pg_dump -h HOST_NAME -U DB_USER DB_NAME > schema_dump.sql
+$ pg_dump -h localhost -U postgres sensors > sensors.sql
+$ Password: password
+
 
 <pgAdmin>
 $ docker pull smarthomeiot/pgadmin4 # supports raspberry pi 3 and 4
