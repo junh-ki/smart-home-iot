@@ -1,11 +1,12 @@
 """
-Prior to using this script, smbus Python library should be installed first:
+Prior to using this script, smbus and postgres libraries should be installed first:
 
-    $ pip3 install smbus
+    $ pip3 install smbus psycopg2
 
 """
 
 import smbus
+import psycopg2
 import time
 
 DEVICE_BUS = 1
