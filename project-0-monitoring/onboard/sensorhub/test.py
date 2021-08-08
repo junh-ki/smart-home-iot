@@ -1,14 +1,30 @@
+import argparse
 import time
 import psycopg2
+
+# python3 test.py --host localhost -d sensors -u postgres --password password --port 5432
+
+def getConfig():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--host", metavar='\b', help="host", type=str) # "localhost"
+    parser.add_argument("-d", "--database", metavar='\b', help="name of database", type=str) # "sensors"
+    parser.add_argument("-u", "--user", metavar='\b', help="name of database user", type=str) # "postgres"
+    parser.add_argument("--password", metavar='\b', help="password of database", type=str) # "password"
+    parser.add_argument("--port", metavar='\b', help="port of database", type=int) # "5432"
+    args = parser.parse_args()
+    return args
+
+# get configurations
+args = getConfig()
 
 # connect to the db
 # TODO: Let's make this dynamically (argparse.ArgumentParser())
 db = psycopg2.connect(
-    host = "localhost",
-    database = "sensors",
-    user = "postgres",
-    password = "password",
-    port = 5432
+    host = args.host,
+    database = args.database,
+    user = args.user,
+    password = args.password,
+    port = args.port
 )
 
 # cursor
@@ -35,3 +51,5 @@ cur.close()
 
 # close the connection
 db.close()
+
+print("done!")

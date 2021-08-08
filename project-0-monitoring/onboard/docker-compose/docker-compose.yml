@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: smarthomeiot/postgres
+    container_name: postgres
+    restart: always
+    ports: 
+      - "5432:5432"
+    networks:
+      - monitor_network
+    volumes:
+      - postgres-storage:/data/postgres
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+
+  daq:
+    image: smarthomeiot/sensorhub-daq
+    container_name: daq
+    restart: always
+    ports: 
+      - "80:80"
+    networks:
+      - monitor_network
+    privileged: true
+
+networks:
+  monitor_network:
+
+volumes:
+  postgres-storage:
