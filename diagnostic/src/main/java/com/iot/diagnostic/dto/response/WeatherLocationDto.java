@@ -1,5 +1,6 @@
 package com.iot.diagnostic.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ public class WeatherLocationDto {
     double latitude;
     double longitude;
     String timezoneId;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime localTime;
     double utcOffset;
 
