@@ -1,6 +1,7 @@
 package com.iot.diagnostic.service;
 
 import com.iot.diagnostic.dto.response.WeatherDto;
+import com.iot.diagnostic.mapper.WeatherDtoMapper;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -35,10 +36,11 @@ public class WeatherService {
     private static final String PARAM_REGION_NAME = "query";
     private static final String ACCESS_KEY = "0e50bd055c1f4b1020b76e93780faacf";
     private final WebClient webClient;
+    private final WeatherDtoMapper weatherDtoMapper;
 
-
-    public WeatherService(WebClient.Builder webClientBuilder) {
+    public WeatherService(WebClient.Builder webClientBuilder, WeatherDtoMapper weatherDtoMapper) {
         this.webClient = webClientBuilder.build();
+        this.weatherDtoMapper = weatherDtoMapper;
     }
 
     public WeatherDto getCurrentWeatherByRegionName(String regionName) {
@@ -50,11 +52,12 @@ public class WeatherService {
                 .queryParams(parameterMap)
                 .build()
                 .toUri();
-        return this.webClient.get()
+        final String weatherCurrentResponseJson = this.webClient.get()
                 .uri(uri)
                 .retrieve()
-                .bodyToMono(WeatherDto.class)
+                .bodyToMono(String.class)
                 .block();
+        return this.weatherDtoMapper.mapJson(weatherCurrentResponseJson);
     }
 
 }

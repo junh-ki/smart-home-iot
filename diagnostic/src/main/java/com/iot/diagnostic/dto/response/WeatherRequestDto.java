@@ -1,3 +1,15 @@
 package com.iot.diagnostic.dto.response;
 
-public record WeatherRequestDto(String type, String query, String language, String unit) {}
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
+public class WeatherRequestDto {
+
+    String type;
+    String query;
+    String language;
+    String unit;
+
+}
