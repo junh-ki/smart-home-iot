@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-@Service
+//@Service
 public class SensorHubService {
 
     //SensorHub Address
@@ -55,7 +55,7 @@ public class SensorHubService {
     public Integer getOffChipTemperatureInCelsius() {
         Integer temperature = null;
         try {
-            int centigrade = this.i2CDevice.read(TEMP_REG);
+            final int centigrade = this.i2CDevice.read(TEMP_REG);
             if (centigrade != 0x01 && centigrade != 0x02) {
                 temperature = centigrade;
             }
@@ -71,7 +71,7 @@ public class SensorHubService {
     public Integer getOnboardBrightnessInLux() {
         Integer brightness = null;
         try {
-            int lux = this.i2CDevice.read(STATUS_REG);
+            final int lux = this.i2CDevice.read(STATUS_REG);
             if (lux != 0x04 && lux != 0x08) {
                 brightness = this.i2CDevice.read(LIGHT_REG_L) | this.i2CDevice.read(LIGHT_REG_H) << 8;
             }
