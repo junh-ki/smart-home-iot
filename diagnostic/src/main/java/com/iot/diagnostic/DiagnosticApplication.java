@@ -16,7 +16,7 @@ public class DiagnosticApplication {
 
     @Bean
     public ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.findAndRegisterModules();
     }
 
