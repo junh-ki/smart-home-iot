@@ -1,13 +1,12 @@
-package com.iot.diagnostic.controller;
+package com.iot.diagnostic.weather.controller;
 
-import com.iot.diagnostic.dto.response.WeatherDto;
-import com.iot.diagnostic.service.WeatherService;
+import com.iot.diagnostic.weather.dto.response.WeatherDto;
+import com.iot.diagnostic.weather.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/v1/weather")

@@ -1,14 +1,14 @@
-package com.iot.diagnostic.mapper;
+package com.iot.diagnostic.weather.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.iot.diagnostic.dto.response.WeatherCurrentDto;
-import com.iot.diagnostic.dto.response.WeatherDto;
-import com.iot.diagnostic.dto.response.WeatherLocationDto;
-import com.iot.diagnostic.dto.response.WeatherRequestDto;
+import com.iot.diagnostic.weather.dto.response.WeatherCurrentDto;
+import com.iot.diagnostic.weather.dto.response.WeatherDto;
+import com.iot.diagnostic.weather.dto.response.WeatherLocationDto;
+import com.iot.diagnostic.weather.dto.response.WeatherRequestDto;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

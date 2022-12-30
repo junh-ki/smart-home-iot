@@ -1,4 +1,4 @@
-package com.iot.diagnostic.dto.response;
+package com.iot.diagnostic.weather.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;

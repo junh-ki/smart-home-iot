@@ -1,7 +1,7 @@
-package com.iot.diagnostic.service;
+package com.iot.diagnostic.weather.service;
 
-import com.iot.diagnostic.dto.response.WeatherDto;
-import com.iot.diagnostic.mapper.WeatherDtoMapper;
+import com.iot.diagnostic.weather.dto.response.WeatherDto;
+import com.iot.diagnostic.weather.mapper.WeatherDtoMapper;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
