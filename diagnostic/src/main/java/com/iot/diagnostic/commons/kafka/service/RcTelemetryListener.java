@@ -1,6 +1,7 @@
 package com.iot.diagnostic.commons.kafka.service;
 
 import com.iot.diagnostic.commons.kafka.KafkaTopics;
+import com.iot.diagnostic.commons.kafka.dto.RcTelemetryDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -17,8 +18,8 @@ public class RcTelemetryListener {
     }
 
     @KafkaListener(topics = KafkaTopics.TOPIC_RC_TELEMETRY, groupId = "Akron")
-    void rcTelemetryListener(Object rcTelemetry) {
-        this.logger.info("Listener received: " + rcTelemetry + " " + PARTY_POPPER);
+    void rcTelemetryListener(RcTelemetryDto rcTelemetryDto) {
+        this.logger.info("Listener received: " + rcTelemetryDto + " " + PARTY_POPPER);
     }
 
 }

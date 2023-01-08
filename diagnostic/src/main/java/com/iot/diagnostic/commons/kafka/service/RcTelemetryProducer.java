@@ -16,6 +16,7 @@ public class RcTelemetryProducer {
     @Bean
     public CommandLineRunner commandLineRunner(KafkaTemplate<String, RcTelemetryDto> rcTelemetryKafkaTemplate) {
         return args -> {
+            /*
             for (int i = 0; i < 1000; i++) {
                 rcTelemetryKafkaTemplate.send(KafkaTopics.TOPIC_RC_TELEMETRY, RcTelemetryDto.builder()
                         .steeringVoltage(2.701D)
@@ -25,7 +26,7 @@ public class RcTelemetryProducer {
                         .timestamp(LocalDateTime.now())
                         .build());
                 Thread.sleep(TimeUnit.MILLISECONDS.toMillis(100));
-            }
+            }*/
         };
     }
 
