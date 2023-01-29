@@ -1,7 +1,8 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 public class RcTelemetryReader {
 
@@ -15,40 +16,32 @@ public class RcTelemetryReader {
         final String throttlePath = ABSOLUTE_PATH_DEVICE_ADS_1115 + FILE_NAME_THROTTLE;
         final String steeringPath = ABSOLUTE_PATH_DEVICE_ADS_1115 + FILE_NAME_STEERING;
         final String batteryPath = ABSOLUTE_PATH_DEVICE_ADS_1115 + FILE_NAME_BATTERY;
-        try {
-            final FileInputStream throttleFIS = new FileInputStream(throttlePath);
-            final InputStreamReader throttleISR = new InputStreamReader(throttleFIS);
-            final BufferedReader throttleBR = new BufferedReader(throttleISR);
-            final FileChannel throttleFC = throttleFIS.getChannel();
-            final FileInputStream steeringFIS = new FileInputStream(steeringPath);
-            final InputStreamReader steeringISR = new InputStreamReader(steeringFIS);
-            final BufferedReader steeringBR = new BufferedReader(steeringISR);
-            final FileChannel steeringFC = steeringFIS.getChannel();
-            final FileInputStream batteryFIS = new FileInputStream(batteryPath);
-            final InputStreamReader batteryISR = new InputStreamReader(batteryFIS);
-            final BufferedReader batteryBR = new BufferedReader(batteryISR);
-            final FileChannel batteryFC = batteryFIS.getChannel();
-            while (true) {
-                System.out.println("------------------");
-                System.out.println("Throttle: " + getMetric(throttleBR, throttleFC));
-                System.out.println("Steering: " + getMetric(steeringBR, steeringFC));
-                System.out.println("Battery: " + getMetric(batteryBR, batteryFC));
-                Thread.sleep(SAMPLING_FREQUENCY);
-            }
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+        final List<String> paths = Arrays.asList(throttlePath, steeringPath, batteryPath);
+        while (true) {
+            System.out.println("---------------");
+            paths.forEach(path -> {
+                try {
+                    final List<String> lines = Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
+                    final String value = lines.isEmpty() ? null : lines.get(0);
+                    final String metricName;
+                    if (path.contains(FILE_NAME_THROTTLE)) {
+                        metricName = "throttle";
+                    } else if (path.contains(FILE_NAME_STEERING)) {
+                        metricName = "steering";
+                    } else {
+                        metricName = "battery";
+                    }
+                    System.out.println(metricName + ": " + value);
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+                try {
+                    Thread.sleep(SAMPLING_FREQUENCY);
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            });
         }
-    }
-
-    private static String getMetric(BufferedReader bufferedReader, FileChannel fileChannel) {
-        try {
-            final String throttleValue = bufferedReader.readLine();
-            fileChannel.position(0);
-            return throttleValue;
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return null;
     }
 
 }
