@@ -62,12 +62,12 @@ public class ADS1115Reader {
                 .device(ADDRESS)
                 .build();
         final I2C i2c = i2CProvider.create(i2cConfig);
-        final GainEnum gain = GainEnum.GAIN_6_144V;
+        final GainEnum gain = GainEnum.GAIN_0_256V;
         for (int i = 0 ; i < 500; i ++) {
-            final double ain0 = getAnalogInput(GainEnum.GAIN_0_256V, A0_IN, i2c);
-            final double ain1 = getAnalogInput(GainEnum.GAIN_0_256V, A1_IN, i2c);
-            final double ain2 = getAnalogInput(GainEnum.GAIN_0_256V, A2_IN, i2c);
-            final double ain3 = getAnalogInput(GainEnum.GAIN_0_256V, A3_IN, i2c);
+            final double ain0 = getAnalogInput(gain, A0_IN, i2c);
+            final double ain1 = getAnalogInput(gain, A1_IN, i2c);
+            final double ain2 = getAnalogInput(gain, A2_IN, i2c);
+            final double ain3 = getAnalogInput(gain, A3_IN, i2c);
             System.out.println("----------------");
             System.out.println("AIN0: " + ain0);
             System.out.println("AIN1: " + ain1);
